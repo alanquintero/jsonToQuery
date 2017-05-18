@@ -1,9 +1,9 @@
 # JSON to Query
 
 
-## Funtionality
+## Functionality
 
-Convert JSON file into INSERT queries file
+Convert JSON file into MySQL INSERT queries file
 
 
 
