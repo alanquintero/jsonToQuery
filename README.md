@@ -9,4 +9,6 @@ Convert JSON file into MySQL INSERT queries file
 
 ## Working Example
 
-Run src/jsonToQuery/Main.java file
+1. Create the next folder: c:/jsonToQuery/
+
+2. Run src/jsonToQuery/Main.java file
