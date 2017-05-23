@@ -32,14 +32,25 @@ public class Generator {
 		ObjectMapper mapper = new ObjectMapper();
 		Container container = null;
 		try {
-			container = mapper.readValue(new File("src/resources/region.json"), Container.class);
+			container = mapper.readValue(new File("src/main/java/resources/region.json"), Container.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+		File directory = new File("C:\\jsonToQuery");
+		if (!directory.exists()) {
+			if (directory.mkdir()) {
+				System.out.println("jsonToQuery Directory is created!");
+			} else {
+				System.out.println("Failed to create jsonToQuery Directory!");
+			}
+		} else {
+			System.out.println("On jsonToQuery Directory!");
+		}
+
 		if (container != null) {
-			File file = new File("c://jsonToQuery//insert-geometry.sql");
-			Path path = Paths.get("c:/jsonToQuery/insert-geometry.sql");
+			File file = new File("C://jsonToQuery//insert-geometry.sql");
+			Path path = Paths.get("C:/jsonToQuery/insert-geometry.sql");
 			BufferedWriter writer = null;
 			try {
 				Files.deleteIfExists(path);
