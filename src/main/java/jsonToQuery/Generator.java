@@ -41,7 +41,7 @@ public class Generator {
 			if (directory.mkdir()) {
 				System.out.println(CREATE_DIRECTORY_SUCCESS);
 			} else {
-				System.out.println(CREATE_DIRECTORY_FAIL);
+				System.err.println(CREATE_DIRECTORY_FAIL);
 			}
 		} else {
 			System.out.println(ON_DIRECTORY);
@@ -56,7 +56,7 @@ public class Generator {
 				if (file.createNewFile()) {
 					System.out.println(CREATE_FILE_SUCCESS);
 				} else {
-					System.out.println(CREATE_FILE_FAIL);
+					System.err.println(CREATE_FILE_FAIL);
 				}
 				writer = Files.newBufferedWriter(path);
 				writer.write(INSERT_INTO + BREAK_LINE);
@@ -66,7 +66,7 @@ public class Generator {
 
 			Map<String, String> states = State.getStates();
 			StringBuilder query = new StringBuilder(QUERY_VALUES);
-			int counter = 1;
+			int counter = 0;
 			System.out.println(RECORDS_TO_CREATE + container.getGeometries().size());
 			for (Geometry geometry : container.getGeometries()) {
 				query.replace(0, query.length(), query.toString().replace(GEOMETRY_TYPE, geometry.getType()));

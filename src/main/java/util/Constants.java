@@ -56,5 +56,7 @@ public class Constants {
 	public static final int SECOND_FLUSH = 2000;
 
 	public static final String SEMICOLON = ";";
+	
+	public static final String NUMBER_OF_RECORDS = "28635";
 
 }
