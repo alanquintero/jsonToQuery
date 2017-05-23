@@ -9,8 +9,7 @@
 
 package jsonToQuery;
 
-import static util.Constants.INSERT_INTO;
-import static util.Constants.QUERY_VALUES;
+import static util.Constants.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,35 +31,35 @@ public class Generator {
 		ObjectMapper mapper = new ObjectMapper();
 		Container container = null;
 		try {
-			container = mapper.readValue(new File("src/main/java/resources/region.json"), Container.class);
+			container = mapper.readValue(new File(JSON_FILE), Container.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		File directory = new File("C:\\jsonToQuery");
+		File directory = new File(DIRECTORY);
 		if (!directory.exists()) {
 			if (directory.mkdir()) {
-				System.out.println("jsonToQuery Directory is created!");
+				System.out.println(CREATE_DIRECTORY_SUCCESS);
 			} else {
-				System.out.println("Failed to create jsonToQuery Directory!");
+				System.out.println(CREATE_DIRECTORY_FAIL);
 			}
 		} else {
-			System.out.println("On jsonToQuery Directory!");
+			System.out.println(ON_DIRECTORY);
 		}
 
 		if (container != null) {
-			File file = new File("C://jsonToQuery//insert-geometry.sql");
-			Path path = Paths.get("C:/jsonToQuery/insert-geometry.sql");
+			File file = new File(MYSQL_FILE);
+			Path path = Paths.get(MYSQL_PATH);
 			BufferedWriter writer = null;
 			try {
 				Files.deleteIfExists(path);
 				if (file.createNewFile()) {
-					System.out.println("File is created!");
+					System.out.println(CREATE_FILE_SUCCESS);
 				} else {
-					System.out.println("File already exists.");
+					System.out.println(CREATE_FILE_FAIL);
 				}
 				writer = Files.newBufferedWriter(path);
-				writer.write(INSERT_INTO + "\n");
+				writer.write(INSERT_INTO + BREAK_LINE);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -68,26 +67,25 @@ public class Generator {
 			Map<String, String> states = State.getStates();
 			StringBuilder query = new StringBuilder(QUERY_VALUES);
 			int counter = 1;
-			System.out.println("Number of records to create: " + container.getGeometries().size());
+			System.out.println(RECORDS_TO_CREATE + container.getGeometries().size());
 			for (Geometry geometry : container.getGeometries()) {
-				query.replace(0, query.length(), query.toString().replace("<geometryType>", geometry.getType()));
+				query.replace(0, query.length(), query.toString().replace(GEOMETRY_TYPE, geometry.getType()));
 				query.replace(0, query.length(),
-						query.toString().replace("<regionName>", geometry.getProperties().getName()));
+						query.toString().replace(REGION_NAME, geometry.getProperties().getName()));
+				query.replace(0, query.length(), query.toString().replace(ZIP_CODE, geometry.getProperties().getZip()));
 				query.replace(0, query.length(),
-						query.toString().replace("<zipCode>", geometry.getProperties().getZip()));
+						query.toString().replace(STATE_CODE, geometry.getProperties().getState()));
+				query.replace(0, query.length(), query.toString().replace(ARCS, geometry.getArcs()));
 				query.replace(0, query.length(),
-						query.toString().replace("<stateCode>", geometry.getProperties().getState()));
-				query.replace(0, query.length(), query.toString().replace("<arcs>", geometry.getArcs()));
-				query.replace(0, query.length(),
-						query.toString().replace("<idstatefk>", states.get(geometry.getProperties().getState())));
+						query.toString().replace(ID_STATE_FK, states.get(geometry.getProperties().getState())));
 
 				if (counter == container.getGeometries().size()) {
-					query.replace(query.length() - 1, query.length(), ";");
+					query.replace(query.length() - 1, query.length(), SEMICOLON);
 				}
 
 				try {
-					writer.write(query.toString() + "\n");
-					if (counter == 10000 || counter == 20000) {
+					writer.write(query.toString() + BREAK_LINE);
+					if (counter == FIRST_FLUSH || counter == SECOND_FLUSH) {
 						writer.flush();
 					}
 				} catch (Exception e) {
@@ -102,7 +100,7 @@ public class Generator {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			System.out.println("Records created: " + counter);
+			System.out.println(RECORDS_CREATED + counter);
 		}
 
 	}

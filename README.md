@@ -3,12 +3,13 @@
 
 ## Functionality
 
+Create directory in C:\jsonToQuery
+
 Convert JSON file into MySQL INSERT queries file
 
+Save file into C:\jsonToQuery\insert-geometry.sql
 
 
 ## Working Example
 
-1. Create the next folder: c:/jsonToQuery/
-
-2. Run src/jsonToQuery/Main.java file
+1. Run src/jsonToQuery/Main.java file
