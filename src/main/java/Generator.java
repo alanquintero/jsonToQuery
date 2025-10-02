@@ -62,7 +62,7 @@ import java.nio.file.Paths;
 public class Generator {
 
     private static final String FILE_NAME = "data.sql";
-    private static final String INSERT_INTO_START_STATEMENT = "INSERT INTO map.geometry (geometry_type, region_name, zip_code, state_code, arcs, state_id) VALUES \n";
+    private static final String INSERT_INTO_START_STATEMENT = "INSERT INTO geometry (geometry_type, region_name, zip_code, state_code, arcs, state_id) VALUES \n";
     private final static String GEOMETRY_TYPE_TAG = "<geometryType>";
     private final static String REGION_NAME_TAG = "<regionName>";
     private final static String ZIP_CODE_TAG = "<zipCode>";
