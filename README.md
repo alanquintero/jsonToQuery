@@ -1,15 +1,82 @@
-# JSON to Query
+# Region Query Generator
+
+This project provides a simple utility to generate SQL (or other format) queries from a JSON resource file containing region data.
+
+## Overview
+
+- The application entry point is the [`Main`](src/main/java/Main.java)(src/main/java/Main.java) class.
+- It loads a JSON file [`region.json`](src/main/java/resources/region.json)(src/main/java/resources/region.json) and invokes the `Generator` class to process it.
+- The JSON file must follow a specific structure (see [Input Format](#input-format)).
+- The program outputs generated queries to a file (see [Output Format](#output-format)).
+
+## Usage
+
+### Run from IDE
+1. Clone or download the repository.
+2. Make sure you have Maven installed.
+3. Open the project in your preferred IDE (IntelliJ, Eclipse, VS Code, etc.).
+4. Run the [`Main`](src/main/java/Main.java) class.
+
+### Run from Command Line
+```bash
+mvn clean compile exec:java -Dexec.mainClass="Main"
+```
+
+## Input File
+The input JSON file must be located at src/main/java/resources/region.json
+
+Example Input:
+
+{
+"geometries": [
+{
+"type": "Polygon",
+"properties": {
+"name": "Los Angeles",
+"zip": "90001",
+"state": "CA"
+},
+"arcs": "[[78179, 78180, 78181, 78182, 78183, 78184]]"
+},
+{
+"type": "Polygon",
+"properties": {
+"name": "San Diego",
+"zip": "92101",
+"state": "CA"
+},
+"arcs": "[[79255, 79256, 79257, 79258, 79259, 79260, 79261]]"
+}
+]
+}
+
+## Output File
+When executed, the program generates the SQL file in a platform-specific directory:
+
+- macOS/Linux: /Users/<your-username>/jsonToQuery/insert-geometry.sql
+- Windows: C:\Users\<your-username>\jsonToQuery\insert-geometry.sql
+
+Example Output:
+
+INSERT INTO map.geometry (geometryType, regionName, zipCode, stateCode, arcs, idstatefk) VALUES  
+('Polygon','LOS ANGELES',90001,'CA','[[78179, 78180, 78181, 78182, 78183, 78184]]',5),  
+('Polygon','SAN DIEGO',92101,'CA','[[79255, 79256, 79257, 79258, 79259, 79260, 79261]]',5);
 
 
-## Functionality
+## Requirements
+- Java 11+
+- Maven 3.6+
+- Jackson library (for JSON parsing)
 
-Create directory in C:\jsonToQuery
+## Features
+- Reads input JSON and maps it to Java objects.
+- Automatically creates cross-platform directory and file.
+- Generates SQL insert statements with correct formatting.
+- Writes output to insert-geometry.sql.
+- Logs progress and error messages to the console.
 
-Convert JSON file into MySQL INSERT queries file
-
-Save file into C:\jsonToQuery\insert-geometry.sql
-
-
-## Working Example
-
-1. Run src/jsonToQuery/Main.java file
+## Notes
+- The project uses Jackson’s ObjectMapper for JSON deserialization.
+- The StateMap class provides a mapping between US state codes and their internal IDs.
+- If the JSON structure is invalid, an error will be printed.
+- Existing output files will be overwritten each run.

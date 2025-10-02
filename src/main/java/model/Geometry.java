@@ -1,44 +1,82 @@
-/*******************************************************
- * Copyright (C) 2017 Alan Quintero <alan_q_b@hotmail.com>
- * 
- * This file is part of My Personal Project: "JSON to Query".
- * 
- * "JSON to Query" can not be copied and/or distributed without the express
- * permission of Alan Quintero.
- *******************************************************/
-
+/**
+ * Copyright 2025 Alan Quintero
+ * Source: https://github.com/alanquintero/jsonToQuery
+ */
 package model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * Represents a single geometry element within the JSON structure.
+ * <p>
+ * Each geometry object defines a shape (e.g., a polygon) and contains
+ * metadata in the {@link Property} object along with the arc indices
+ * that describe the shape.
+ * </p>
+ *
+ * <h3>Expected JSON structure</h3>
+ * A geometry entry in the {@code geometries} array is expected to look like:
+ *
+ * <pre>
+ * {
+ *   "type": "Polygon",
+ *   "properties": {
+ *     "name": "MT MEADOWS AREA",
+ *     "zip": "00012",
+ *     "state": "CA"
+ *   },
+ *   "arcs": "[[0, 1, 2]]"
+ * }
+ * </pre>
+ *
+ * <ul>
+ *   <li>{@code type} - the geometry type, such as "Polygon".</li>
+ *   <li>{@code properties} - a {@link Property} object containing:
+ *     <ul>
+ *       <li>{@code name} - descriptive name of the region.</li>
+ *       <li>{@code zip} - zip code associated with the region.</li>
+ *       <li>{@code state} - two-letter state code (e.g., "CA").</li>
+ *     </ul>
+ *   </li>
+ *   <li>{@code arcs} - a string representation of the arc indices
+ *       that define the geometry's shape (e.g., "[[0, 1, 2]]").</li>
+ * </ul>
+ *
+ * @author Alan Quintero
+ */
 public class Geometry {
 
-	private String type;
+    @JsonProperty("type")
+    private String type;
 
-	private Property properties;
+    @JsonProperty("properties")
+    private Property properties;
 
-	private String arcs;
+    @JsonProperty("arcs")
+    private String arcs;
 
-	public String getArcs() {
-		return arcs;
-	}
+    public String getArcs() {
+        return arcs;
+    }
 
-	public void setArcs(String arcs) {
-		this.arcs = arcs;
-	}
+    public void setArcs(final String arcs) {
+        this.arcs = arcs;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(final String type) {
+        this.type = type;
+    }
 
-	public Property getProperties() {
-		return properties;
-	}
+    public Property getProperties() {
+        return properties;
+    }
 
-	public void setProperties(Property properties) {
-		this.properties = properties;
-	}
+    public void setProperties(final Property properties) {
+        this.properties = properties;
+    }
 
 }

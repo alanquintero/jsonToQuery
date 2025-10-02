@@ -1,44 +1,50 @@
-/*******************************************************
- * Copyright (C) 2017 Alan Quintero <alan_q_b@hotmail.com>
- * 
- * This file is part of My Personal Project: "JSON to Query".
- * 
- * "JSON to Query" can not be copied and/or distributed without the express
- * permission of Alan Quintero.
- *******************************************************/
-
+/**
+ * Copyright 2025 Alan Quintero
+ * Source: https://github.com/alanquintero/jsonToQuery
+ */
 package model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * Represents a property with basic details such as
+ * name, zip code, and state.
+ *
+ * @author Alan Quintero
+ */
 public class Property {
 
-	private String name;
+    @JsonProperty("name")
+    private String name;
 
-	private String zip;
+    @JsonProperty("zip")
+    private String zip;
 
-	private String state;
+    @JsonProperty("state")
+    private String state;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	public String getZip() {
-		return zip;
-	}
+    public String getZip() {
+        return zip;
+    }
 
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
+    public void setZip(final String zip) {
+        this.zip = zip;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setState(final String state) {
+        this.state = state;
+    }
 
 }
