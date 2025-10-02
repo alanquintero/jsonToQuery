@@ -32,9 +32,9 @@ public class StateMapTest {
         final StateMap stateMap = new StateMap();
 
         // When
-        final String alNumber = stateMap.getState("AL");
-        final String prNumber = stateMap.getState("PR");
-        final String randomState = stateMap.getState("KS");
+        final String alNumber = stateMap.getStateId("AL");
+        final String prNumber = stateMap.getStateId("PR");
+        final String randomState = stateMap.getStateId("KS");
 
         // Then
         Assert.assertNotNull(alNumber);
@@ -50,7 +50,7 @@ public class StateMapTest {
         final StateMap stateMap = new StateMap();
 
         // When
-        final String invalidNumber = stateMap.getState("AGS");
+        final String invalidNumber = stateMap.getStateId("AGS");
 
         // Then
         Assert.assertNull(invalidNumber);

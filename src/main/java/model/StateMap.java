@@ -20,7 +20,7 @@ public class StateMap {
         initStateMap();
     }
 
-    public String getState(final String key) {
+    public String getStateId(final String key) {
         return stateMap.get(key);
     }
 

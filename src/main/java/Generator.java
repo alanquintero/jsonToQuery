@@ -61,15 +61,15 @@ import java.nio.file.Paths;
  */
 public class Generator {
 
-    private static final String FILE_NAME = "insert-geometry.sql";
-    private static final String INSERT_INTO_START_STATEMENT = "INSERT INTO map.geometry (geometryType, regionName, zipCode, stateCode, arcs, idstatefk) VALUES \n";
+    private static final String FILE_NAME = "data.sql";
+    private static final String INSERT_INTO_START_STATEMENT = "INSERT INTO map.geometry (geometry_type, region_name, zip_code, state_code, arcs, state_id) VALUES \n";
     private final static String GEOMETRY_TYPE_TAG = "<geometryType>";
     private final static String REGION_NAME_TAG = "<regionName>";
     private final static String ZIP_CODE_TAG = "<zipCode>";
     private final static String STATE_CODE_TAG = "<stateCode>";
     private final static String ARCS_TAG = "<arcs>";
-    private final static String ID_STATE_TAG = "<idstatefk>";
-    static final String TAGS_FOR_QUERY = "('<geometryType>','<regionName>',<zipCode>,'<stateCode>','<arcs>',<idstatefk>),";
+    private final static String STATE_ID_TAG = "<stateID>";
+    static final String TAGS_FOR_QUERY = "('<geometryType>','<regionName>','<zipCode>','<stateCode>','<arcs>',<stateID>),";
 
     public static void generateQuery(final String jsonFile) {
         final Container container = createContainer(jsonFile);
@@ -169,7 +169,7 @@ public class Generator {
         final StringBuilder queryTemplate = new StringBuilder(TAGS_FOR_QUERY);
         final String query = queryTemplate.toString();
         if (!(query.contains(GEOMETRY_TYPE_TAG) || query.contains(REGION_NAME_TAG) || query.contains(ZIP_CODE_TAG)
-                || query.contains(STATE_CODE_TAG) || query.contains(ARCS_TAG) || query.contains(ID_STATE_TAG))) {
+                || query.contains(STATE_CODE_TAG) || query.contains(ARCS_TAG) || query.contains(STATE_ID_TAG))) {
             System.err.println("Query template is incorrect!");
             return;
         }
@@ -221,7 +221,6 @@ public class Generator {
      * @param counter   the current number of records generated
      */
     static void generateQuery(StringBuilder query, final Container container, final StateMap stateMap, final Geometry geometry, final int counter) {
-
         query.replace(0, query.length(), query.toString().replace(GEOMETRY_TYPE_TAG, geometry.getType()));
         query.replace(0, query.length(),
                 query.toString().replace(REGION_NAME_TAG, geometry.getProperties().getName()));
@@ -230,7 +229,7 @@ public class Generator {
                 query.toString().replace(STATE_CODE_TAG, geometry.getProperties().getState()));
         query.replace(0, query.length(), query.toString().replace(ARCS_TAG, geometry.getArcs()));
         query.replace(0, query.length(),
-                query.toString().replace(ID_STATE_TAG, stateMap.getState(geometry.getProperties().getState())));
+                query.toString().replace(STATE_ID_TAG, stateMap.getStateId(geometry.getProperties().getState())));
 
         if (counter == container.getGeometries().size()) {
             query.replace(query.length() - 1, query.length(), ";");
