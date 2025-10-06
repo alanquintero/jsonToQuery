@@ -71,6 +71,8 @@ INSERT INTO map.geometry (geometryType, regionName, zipCode, stateCode, arcs, id
 ('Polygon','SAN DIEGO',92101,'CA','[[79255, 79256, 79257, 79258, 79259, 79260, 79261]]',5);
 ```
 
+![Demo](docs/demo.gif)
+
 ## Requirements
 
 - Java 11+
